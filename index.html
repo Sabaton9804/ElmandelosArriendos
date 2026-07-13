@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>El Man de los Arriendos | Demo Portal + Mapa</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="demo-banner">
+    <span>DEMO MVP — inmuebles reales de su Shopify + mapa (estilo Fincaraíz/Metro)</span>
+    <button type="button" id="btn-pitch">Ver propuesta rápida</button>
+  </div>
+
+  <header class="top">
+    <a class="brand" href="#top" aria-label="El Man de los Arriendos">
+      <span class="brand-logo-wrap">
+        <img class="brand-logo" src="logo.png" alt="El Man de los Arriendos" width="220" height="56" />
+      </span>
+    </a>
+    <nav class="nav">
+      <button type="button" class="nav-link is-active" data-city="todos">Todo</button>
+      <button type="button" class="nav-link" data-city="bogota">Bogotá</button>
+      <button type="button" class="nav-link" data-city="medellin">Medellín</button>
+      <button type="button" class="nav-link" id="btn-map-nav">Mapa</button>
+      <div class="auth-actions" id="auth-actions">
+        <button type="button" class="btn-login" id="btn-login" data-auth="login">Ingresar</button>
+        <button type="button" class="btn-signup" id="btn-signup" data-auth="signup">Crear cuenta</button>
+      </div>
+      <div class="user-chip" id="user-chip" hidden>
+        <span class="user-avatar" id="user-avatar">EM</span>
+        <span class="user-name" id="user-name">Cuenta</span>
+        <button type="button" class="btn-logout" id="btn-logout">Salir</button>
+      </div>
+      <a class="nav-cta" href="#contacto">Publica tu inmueble</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-content">
+        <p class="hero-kicker">BOGOTÁ · MEDELLÍN Y ALREDEDORES</p>
+        <h1>EL MAN<br /><span>DE LOS ARRIENDOS</span></h1>
+        <p class="hero-sub">Portal propio con tus inmuebles reales: filtra, mira el mapa y escribe por WhatsApp. Sin carrito. Sin look de tienda.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#listado">Ver inmuebles</a>
+          <a class="btn btn-ghost" href="#mapa">Ver en mapa</a>
+          <a class="btn btn-ghost" href="https://wa.me/573017972737" target="_blank" rel="noopener">WhatsApp ahora</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cities" aria-label="Elige ciudad">
+      <button type="button" class="city-card" data-city="bogota">
+        <span class="city-label">Selecciona</span>
+        <strong>BOGOTÁ</strong>
+      </button>
+      <button type="button" class="city-card" data-city="medellin">
+        <span class="city-label">Selecciona</span>
+        <strong>MEDALLO</strong>
+      </button>
+    </section>
+
+    <section class="map-section" id="mapa">
+      <div class="map-head">
+        <div>
+          <h2>Navega en el mapa</h2>
+          <p>Haz clic en un pin para ver el inmueble. Las ubicaciones son aproximadas por zona (demo).</p>
+        </div>
+        <div class="map-tools">
+          <button type="button" class="btn btn-ghost" id="btn-fit">Ajustar mapa</button>
+        </div>
+      </div>
+      <div id="map" role="application" aria-label="Mapa de inmuebles"></div>
+      <aside id="map-panel" class="map-panel" hidden></aside>
+    </section>
+
+    <section class="filters" id="listado">
+      <div class="filters-bar">
+        <div class="filters-main">
+          <label>
+            Operación
+            <select id="f-op">
+              <option value="todos">Todas</option>
+              <option value="arriendo">Arriendo</option>
+              <option value="venta">Venta</option>
+              <option value="renta">Renta corta</option>
+            </select>
+          </label>
+          <label>
+            Tipo
+            <select id="f-tipo">
+              <option value="todos">Todos</option>
+              <option value="apto">Apartamento</option>
+              <option value="apartaestudio">Apartaestudio</option>
+              <option value="casa">Casa</option>
+              <option value="local">Local / Lote</option>
+            </select>
+          </label>
+          <label>
+            Habitaciones
+            <select id="f-habs">
+              <option value="todos">Cualquiera</option>
+              <option value="1">1+</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+              <option value="4">4+</option>
+            </select>
+          </label>
+          <label>
+            Baños
+            <select id="f-banos">
+              <option value="todos">Cualquiera</option>
+              <option value="1">1+</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+            </select>
+          </label>
+          <label>
+            Precio desde
+            <input id="f-min" type="number" min="0" step="50000" placeholder="Ej: 1500000" />
+          </label>
+          <label>
+            Precio hasta
+            <input id="f-max" type="number" min="0" step="50000" placeholder="Ej: 5000000" />
+          </label>
+          <label>
+            Buscar
+            <input id="f-q" type="search" placeholder="Ej: Suba, Poblado, Chapinero…" />
+          </label>
+        </div>
+
+        <div class="filters-chips" id="feature-filters" aria-label="Características">
+          <button type="button" class="chip" data-feat="parqueadero">Parqueadero</button>
+          <button type="button" class="chip" data-feat="amoblado">Amoblado</button>
+          <button type="button" class="chip" data-feat="balcon">Balcón</button>
+          <button type="button" class="chip" data-feat="terraza">Terraza</button>
+          <button type="button" class="chip" data-feat="ascensor">Ascensor</button>
+          <button type="button" class="chip" data-feat="deposito">Depósito</button>
+          <button type="button" class="chip" data-feat="piscina">Piscina</button>
+          <button type="button" class="chip" data-feat="gimnasio">Gimnasio</button>
+          <button type="button" class="chip" data-feat="vigilancia">Vigilancia</button>
+          <button type="button" class="chip" data-feat="domotica">Domótica</button>
+          <button type="button" class="chip" data-feat="mascotas">Mascotas</button>
+          <button type="button" class="chip" data-feat="aire">Aire acond.</button>
+          <button type="button" class="chip" data-feat="chimenea">Chimenea</button>
+          <button type="button" class="chip" data-feat="jardin">Jardín</button>
+          <button type="button" class="chip" data-feat="conjunto">Conjunto</button>
+        </div>
+
+        <div class="filters-foot">
+          <p class="filters-count"><span id="count">0</span> inmuebles</p>
+          <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-filters">Limpiar filtros</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" id="grid" aria-live="polite"></section>
+
+    <section class="owners" id="contacto">
+      <div class="owners-copy">
+        <h2>¿Eres propietario?</h2>
+        <p>Nos encargamos de venderlo, arrendarlo o promocionarlo. Fotos, filtros, mapa y WhatsApp directo.</p>
+        <a class="btn btn-primary" href="https://wa.me/573017972737?text=Hola%20quiero%20publicar%20mi%20inmueble" target="_blank" rel="noopener">Clic aquí y te contamos</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div>
+      <strong>El Man de los Arriendos</strong>
+      <p>Demo con catálogo real de elmandelosarriendos.com · mapa aproximado por zona</p>
+    </div>
+    <a href="https://wa.me/573017972737" target="_blank" rel="noopener">WhatsApp (Atención inmediata)</a>
+  </footer>
+
+  <dialog id="pitch">
+    <form method="dialog" class="pitch-box">
+      <h3>Propuesta rápida</h3>
+      <ul>
+        <li><strong>Portal propio</strong> con tus inmuebles + mapa</li>
+        <li><strong>Setup</strong> + <strong>mensual</strong> de operación</li>
+        <li><strong>% de destacados / publicidad</strong> en la web (tus arriendos se quedan tuyos)</li>
+      </ul>
+      <p class="pitch-note">Esto ya usa tu catálogo real de Shopify. En la versión final: admin, pins GPS exactos y más filtros.</p>
+      <menu>
+        <button value="cancel" class="btn btn-ghost">Cerrar</button>
+        <a class="btn btn-primary" href="https://wa.me/573017972737?text=Vi%20el%20demo%20del%20portal%20con%20mapa%20y%20quiero%20hablar" target="_blank" rel="noopener">Hablar por WhatsApp</a>
+      </menu>
+    </form>
+  </dialog>
+
+  <dialog id="auth-dialog">
+    <div class="auth-modal">
+      <button type="button" class="auth-close" id="auth-close" aria-label="Cerrar">×</button>
+      <div class="auth-brand">
+        <span class="brand-logo-wrap auth-logo-wrap">
+          <img class="brand-logo" src="logo.png" alt="El Man de los Arriendos" />
+        </span>
+      </div>
+      <div class="auth-tabs" role="tablist">
+        <button type="button" class="auth-tab is-active" data-tab="login" role="tab">Ingresar</button>
+        <button type="button" class="auth-tab" data-tab="signup" role="tab">Crear cuenta</button>
+      </div>
+
+      <form id="form-login" class="auth-form" autocomplete="on">
+        <label>Correo
+          <input type="email" name="email" placeholder="tu@correo.com" required />
+        </label>
+        <label>Contraseña
+          <input type="password" name="password" placeholder="••••••••" required minlength="6" />
+        </label>
+        <div class="auth-row">
+          <label class="check"><input type="checkbox" /> Recordarme</label>
+          <button type="button" class="linkish">¿Olvidaste tu clave?</button>
+        </div>
+        <button type="submit" class="btn btn-primary auth-submit">Entrar</button>
+      </form>
+
+      <form id="form-signup" class="auth-form" hidden autocomplete="on">
+        <label>Nombre
+          <input type="text" name="name" placeholder="Tu nombre" required />
+        </label>
+        <label>Correo
+          <input type="email" name="email" placeholder="tu@correo.com" required />
+        </label>
+        <label>WhatsApp
+          <input type="tel" name="phone" placeholder="300 000 0000" />
+        </label>
+        <label>Contraseña
+          <input type="password" name="password" placeholder="Mínimo 6 caracteres" required minlength="6" />
+        </label>
+        <label class="check grow">
+          <input type="checkbox" required />
+          Acepto términos y tratamiento de datos
+        </label>
+        <button type="submit" class="btn btn-primary auth-submit">Crear mi cuenta</button>
+      </form>
+
+      <div class="auth-divider"><span>o continúa con</span></div>
+      <div class="auth-social">
+        <button type="button" class="btn-social" data-provider="Google">
+          <span class="g">G</span> Google
+        </button>
+        <button type="button" class="btn-social" data-provider="Apple">
+          <span class="a"></span> Apple
+        </button>
+      </div>
+      <p class="auth-note">Demo visual — la autenticación real la conectamos después.</p>
+    </div>
+  </dialog>
+
+  <div id="detail" class="detail" hidden>
+    <div class="detail-shell">
+      <button type="button" class="detail-close" id="detail-close" aria-label="Cerrar ficha">← Volver al listado</button>
+      <div id="detail-content"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="properties-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
