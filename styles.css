@@ -842,25 +842,160 @@ dialog {
   box-shadow: var(--shadow);
 }
 dialog::backdrop { background: rgba(0,0,0,0.72); }
-.pitch-box { padding: 1.35rem; }
-.pitch-box h3 {
-  margin: 0 0 0.75rem;
-  font-family: var(--display);
-  text-transform: uppercase;
+
+#pitch {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  max-width: 560px;
+  width: calc(100% - 1.5rem);
+  overflow: visible;
 }
-.pitch-box ul {
+#pitch::backdrop {
+  background: rgba(0,0,0,0.82);
+  backdrop-filter: blur(6px);
+}
+.pitch-modal {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  border: 1px solid rgba(244,241,236,0.14);
+  background:
+    radial-gradient(900px 280px at 12% -10%, rgba(225,6,0,0.28), transparent 55%),
+    radial-gradient(700px 240px at 100% 0%, rgba(255,255,255,0.06), transparent 50%),
+    linear-gradient(180deg, #17171a 0%, #0e0e10 100%);
+  box-shadow: 0 28px 90px rgba(0,0,0,0.55);
+  padding: 1.5rem 1.35rem 1.15rem;
+}
+.pitch-modal::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--red), #ff8a80 70%, transparent);
+}
+.pitch-close {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.7rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.55rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.pitch-close:hover { color: #fff; }
+.pitch-top {
+  margin-bottom: 1rem;
+  padding-right: 1.5rem;
+}
+.pitch-by {
   margin: 0;
-  padding-left: 1.1rem;
-  color: #d6d3cd;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
-.pitch-note { color: var(--muted); font-size: 0.9rem; }
-.pitch-box menu {
+.pitch-agency {
+  margin: 0.15rem 0 0.2rem;
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 4vw, 2.15rem);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  background: linear-gradient(90deg, #ffffff 8%, #ff8a80 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.pitch-for {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #d6d3cd;
+  font-weight: 600;
+}
+.pitch-title {
+  margin: 0 0 0.45rem;
+  font-family: var(--display);
+  font-size: clamp(1.15rem, 2.8vw, 1.45rem);
+  line-height: 1.15;
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+.pitch-lead {
+  margin: 0 0 1.1rem;
+  color: #cfc9c0;
+  font-size: 0.95rem;
+  max-width: 42ch;
+}
+.pitch-model {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.55rem;
+  margin-bottom: 1rem;
+}
+.pitch-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--line);
+  padding: 0.85rem 0.75rem 0.9rem;
+  min-height: 100%;
+}
+.pitch-card-tag {
+  display: inline-block;
+  margin-bottom: 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ff8a80;
+}
+.pitch-card h4 {
+  margin: 0 0 0.35rem;
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+.pitch-card p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.pitch-note {
+  margin: 0 0 1.1rem;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  border-left: 2px solid rgba(225,6,0,0.55);
+  padding-left: 0.75rem;
+}
+.pitch-actions {
   display: flex;
   gap: 0.6rem;
-  justify-content: flex-end;
+  justify-content: stretch;
   flex-wrap: wrap;
-  padding: 0;
+}
+.pitch-actions .btn {
+  flex: 1 1 auto;
+  text-align: center;
+  justify-content: center;
+}
+.pitch-wa {
+  flex: 1.4 1 auto;
+}
+.pitch-foot {
   margin: 1rem 0 0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.pitch-foot strong {
+  color: #fff;
+  letter-spacing: 0.06em;
+}
+@media (max-width: 560px) {
+  .pitch-model { grid-template-columns: 1fr; }
+  .pitch-actions { flex-direction: column; }
 }
 
 /* AUTH MODAL */

@@ -251,19 +251,39 @@
   </footer>
 
   <dialog id="pitch">
-    <form method="dialog" class="pitch-box">
-      <h3>Propuesta rápida</h3>
-      <ul>
-        <li><strong>Portal propio</strong> con tus inmuebles + mapa</li>
-        <li><strong>Setup</strong> + <strong>mensual</strong> de operación</li>
-        <li><strong>% de destacados / publicidad</strong> en la web (tus arriendos se quedan tuyos)</li>
-      </ul>
-      <p class="pitch-note">Esto ya usa tu catálogo real de Shopify. En la versión final: admin, pins GPS exactos y más filtros.</p>
-      <menu>
-        <button value="cancel" class="btn btn-ghost">Cerrar</button>
-        <a class="btn btn-primary" href="https://wa.me/573017972737?text=Vi%20el%20demo%20del%20portal%20con%20mapa%20y%20quiero%20hablar" target="_blank" rel="noopener">Hablar por WhatsApp</a>
-      </menu>
-    </form>
+    <div class="pitch-modal">
+      <button type="button" class="pitch-close" id="pitch-close" aria-label="Cerrar">×</button>
+      <div class="pitch-top">
+        <p class="pitch-by">Propuesta de</p>
+        <p class="pitch-agency">Sastrech</p>
+        <p class="pitch-for">para El Man de los Arriendos</p>
+      </div>
+      <h3 class="pitch-title">Tu marca. Tu portal. Tus reglas.</h3>
+      <p class="pitch-lead">Dejamos Shopify de tienda y pasamos a un portal inmobiliario real: mapa, filtros y ficha lista para cerrar por WhatsApp.</p>
+      <div class="pitch-model">
+        <article class="pitch-card">
+          <span class="pitch-card-tag">01</span>
+          <h4>Setup</h4>
+          <p>Diseño, dominio, catálogo y lanzamiento del portal.</p>
+        </article>
+        <article class="pitch-card">
+          <span class="pitch-card-tag">02</span>
+          <h4>Mensual</h4>
+          <p>Hosting, soporte y operación continua del sitio.</p>
+        </article>
+        <article class="pitch-card">
+          <span class="pitch-card-tag">03</span>
+          <h4>% publicidad</h4>
+          <p>Solo de destacados en la web. Tus arriendos se quedan tuyos.</p>
+        </article>
+      </div>
+      <p class="pitch-note">Este demo ya usa tu catálogo real de Shopify. En la versión final: panel admin, pins GPS exactos y más filtros.</p>
+      <div class="pitch-actions">
+        <button type="button" class="btn btn-ghost" id="pitch-dismiss">Cerrar</button>
+        <a class="btn btn-primary pitch-wa" href="https://wa.me/573017972737?text=Vi%20el%20demo%20de%20Sastrech%20(portal%20%2B%20mapa)%20y%20quiero%20hablar%20de%20la%20propuesta" target="_blank" rel="noopener">Agendar por WhatsApp</a>
+      </div>
+      <p class="pitch-foot">Hecho por <strong>Sastrech</strong></p>
+    </div>
   </dialog>
 
   <dialog id="auth-dialog">

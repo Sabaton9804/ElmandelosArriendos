@@ -512,6 +512,8 @@ document.getElementById("btn-map-nav").addEventListener("click", () => {
   document.getElementById("mapa").scrollIntoView({ behavior: "smooth" });
 });
 document.getElementById("btn-pitch").addEventListener("click", () => pitch.showModal());
+document.getElementById("pitch-close").addEventListener("click", () => pitch.close());
+document.getElementById("pitch-dismiss").addEventListener("click", () => pitch.close());
 document.getElementById("detail-close").addEventListener("click", closeDetail);
 
 /* -------- Auth demo (UI only) -------- */
