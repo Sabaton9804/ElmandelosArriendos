@@ -938,61 +938,64 @@ dialog::backdrop { background: rgba(0,0,0,0.72); }
   text-transform: uppercase;
   color: #ff8a80;
 }
-.pitch-benefits {
+.pitch-money {
   list-style: none;
   margin: 0 0 1rem;
   padding: 0;
+  counter-reset: money;
   display: grid;
   gap: 0.5rem;
 }
-.pitch-benefits li {
+.pitch-money li {
+  position: relative;
+  counter-increment: money;
   display: grid;
-  gap: 0.15rem;
-  padding: 0.75rem 0.85rem;
+  gap: 0.2rem;
+  padding: 0.8rem 0.85rem 0.85rem 2.6rem;
   background: rgba(255,255,255,0.03);
   border: 1px solid var(--line);
-  border-left: 3px solid var(--red);
 }
-.pitch-benefits strong {
-  font-size: 0.92rem;
+.pitch-money li::before {
+  content: counter(money, decimal-leading-zero);
+  position: absolute;
+  left: 0.75rem;
+  top: 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #ff8a80;
+}
+.pitch-money strong {
+  font-size: 0.95rem;
   font-weight: 800;
   color: #fff;
 }
-.pitch-benefits span {
+.pitch-money span {
   font-size: 0.82rem;
   line-height: 1.4;
   color: #cfc9c0;
 }
-.pitch-model {
+.pitch-money em {
+  font-style: normal;
+  color: #fff;
+  font-weight: 700;
+}
+.pitch-split {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 0.55rem;
   margin-bottom: 1rem;
 }
-.pitch-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--line);
-  padding: 0.85rem 0.75rem 0.9rem;
-  min-height: 100%;
+.pitch-split > div {
+  padding: 0.75rem 0.8rem;
+  background: rgba(225,6,0,0.08);
+  border: 1px solid rgba(225,6,0,0.28);
 }
-.pitch-card-tag {
-  display: inline-block;
-  margin-bottom: 0.45rem;
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #ff8a80;
-}
-.pitch-card h4 {
-  margin: 0 0 0.35rem;
-  font-size: 0.98rem;
-  font-weight: 800;
-}
-.pitch-card p {
+.pitch-split-text {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   line-height: 1.4;
-  color: var(--muted);
+  color: #d6d3cd;
 }
 .pitch-note {
   margin: 0 0 1.1rem;
@@ -1027,7 +1030,7 @@ dialog::backdrop { background: rgba(0,0,0,0.72); }
   letter-spacing: 0.06em;
 }
 @media (max-width: 560px) {
-  .pitch-model { grid-template-columns: 1fr; }
+  .pitch-split { grid-template-columns: 1fr; }
   .pitch-actions { flex-direction: column; }
 }
 
