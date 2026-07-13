@@ -849,7 +849,12 @@ dialog::backdrop { background: rgba(0,0,0,0.72); }
   background: transparent;
   max-width: 620px;
   width: calc(100% - 1.5rem);
-  overflow: visible;
+  max-height: min(92dvh, 92vh);
+  margin: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 #pitch::backdrop {
   background: rgba(0,0,0,0.82);
@@ -857,7 +862,7 @@ dialog::backdrop { background: rgba(0,0,0,0.72); }
 }
 .pitch-modal {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   color: #fff;
   border: 1px solid rgba(244,241,236,0.14);
   background:
@@ -865,7 +870,7 @@ dialog::backdrop { background: rgba(0,0,0,0.72); }
     radial-gradient(700px 240px at 100% 0%, rgba(255,255,255,0.06), transparent 50%),
     linear-gradient(180deg, #17171a 0%, #0e0e10 100%);
   box-shadow: 0 28px 90px rgba(0,0,0,0.55);
-  padding: 1.5rem 1.35rem 1.15rem;
+  padding: 1.35rem 1.25rem 1.1rem;
 }
 .pitch-modal::before {
   content: "";
@@ -940,18 +945,18 @@ dialog::backdrop { background: rgba(0,0,0,0.72); }
 }
 .pitch-money {
   list-style: none;
-  margin: 0 0 1rem;
+  margin: 0 0 0.85rem;
   padding: 0;
   counter-reset: money;
   display: grid;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 .pitch-money li {
   position: relative;
   counter-increment: money;
   display: grid;
-  gap: 0.2rem;
-  padding: 0.8rem 0.85rem 0.85rem 2.6rem;
+  gap: 0.15rem;
+  padding: 0.65rem 0.75rem 0.7rem 2.4rem;
   background: rgba(255,255,255,0.03);
   border: 1px solid var(--line);
 }
