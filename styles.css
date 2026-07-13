@@ -997,6 +997,63 @@ dialog::backdrop { background: rgba(0,0,0,0.72); }
   line-height: 1.4;
   color: #d6d3cd;
 }
+.pitch-math {
+  margin: 0 0 1rem;
+  padding: 0.9rem 0.9rem 0.85rem;
+  border: 1px solid rgba(225,6,0,0.35);
+  background:
+    linear-gradient(135deg, rgba(225,6,0,0.16), transparent 55%),
+    rgba(255,255,255,0.03);
+}
+.pitch-math-title {
+  margin: 0 0 0.55rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #fff;
+}
+.pitch-math-rows {
+  list-style: none;
+  margin: 0 0 0.55rem;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+.pitch-math-rows li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: baseline;
+  font-size: 0.82rem;
+  color: #cfc9c0;
+  border-bottom: 1px dashed rgba(244,241,236,0.12);
+  padding-bottom: 0.3rem;
+}
+.pitch-math-rows strong {
+  color: #fff;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.pitch-math-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: baseline;
+  margin: 0 0 0.4rem;
+  font-size: 0.86rem;
+  color: #d6d3cd;
+}
+.pitch-math-total strong {
+  color: #ff8a80;
+  font-size: 1.05rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.pitch-math-note {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
 .pitch-note {
   margin: 0 0 1.1rem;
   color: var(--muted);
