@@ -19,6 +19,8 @@ const FEATURE_LABELS = {
   conjunto: "Conjunto",
 };
 
+const PAGE_SIZE = 9;
+
 const state = {
   city: "todos",
   op: "todos",
@@ -30,9 +32,11 @@ const state = {
   q: "",
   features: new Set(),
   activeId: null,
+  page: 1,
 };
 
 const grid = document.getElementById("grid");
+const pager = document.getElementById("pager");
 const countEl = document.getElementById("count");
 const pitch = document.getElementById("pitch");
 const panel = document.getElementById("map-panel");
@@ -161,14 +165,83 @@ function featurePills(p, limit = 4) {
     .join("");
 }
 
+function pageSlice(list) {
+  const totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+  if (state.page > totalPages) state.page = totalPages;
+  if (state.page < 1) state.page = 1;
+  const start = (state.page - 1) * PAGE_SIZE;
+  return {
+    pageItems: list.slice(start, start + PAGE_SIZE),
+    totalPages,
+    total: list.length,
+    start: list.length ? start + 1 : 0,
+    end: Math.min(start + PAGE_SIZE, list.length),
+  };
+}
+
+function renderPager(total, totalPages) {
+  if (!pager) return;
+  if (total <= PAGE_SIZE) {
+    pager.hidden = true;
+    pager.innerHTML = "";
+    return;
+  }
+  pager.hidden = false;
+
+  const buttons = [];
+  const windowSize = 5;
+  let from = Math.max(1, state.page - Math.floor(windowSize / 2));
+  let to = Math.min(totalPages, from + windowSize - 1);
+  from = Math.max(1, to - windowSize + 1);
+
+  buttons.push(
+    `<button type="button" class="page-btn" data-page="${state.page - 1}" ${state.page <= 1 ? "disabled" : ""}>Anterior</button>`
+  );
+  if (from > 1) {
+    buttons.push(`<button type="button" class="page-btn" data-page="1">1</button>`);
+    if (from > 2) buttons.push(`<span class="page-ellipsis">…</span>`);
+  }
+  for (let i = from; i <= to; i++) {
+    buttons.push(
+      `<button type="button" class="page-btn${i === state.page ? " is-active" : ""}" data-page="${i}">${i}</button>`
+    );
+  }
+  if (to < totalPages) {
+    if (to < totalPages - 1) buttons.push(`<span class="page-ellipsis">…</span>`);
+    buttons.push(
+      `<button type="button" class="page-btn" data-page="${totalPages}">${totalPages}</button>`
+    );
+  }
+  buttons.push(
+    `<button type="button" class="page-btn" data-page="${state.page + 1}" ${state.page >= totalPages ? "disabled" : ""}>Siguiente</button>`
+  );
+
+  pager.innerHTML = `
+    <p class="pager-meta">Mostrando <strong>${(state.page - 1) * PAGE_SIZE + 1}–${Math.min(state.page * PAGE_SIZE, total)}</strong> de <strong>${total}</strong></p>
+    <div class="pager-btns">${buttons.join("")}</div>
+  `;
+
+  pager.querySelectorAll(".page-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const next = Number(btn.dataset.page);
+      if (!next || next < 1 || next > totalPages || next === state.page) return;
+      state.page = next;
+      render({ scrollList: true });
+    });
+  });
+}
+
 function renderCards(list) {
-  countEl.textContent = String(list.length);
-  if (!list.length) {
+  const { pageItems, totalPages, total } = pageSlice(list);
+  countEl.textContent = String(total);
+  renderPager(total, totalPages);
+
+  if (!total) {
     grid.innerHTML = `<div class="empty">No hay inmuebles con esos filtros. Quita alguno y vuelve a intentar.</div>`;
     return;
   }
 
-  grid.innerHTML = list
+  grid.innerHTML = pageItems
     .map((p) => {
       const sold = p.available === false;
       const specs = [
@@ -236,13 +309,22 @@ function fitMap(list) {
   map.fitBounds(bounds.pad(0.18), { maxZoom: 12 });
 }
 
-function render() {
+function render({ scrollList = false } = {}) {
   const list = filtered();
   renderCards(list);
   renderMarkers(list);
   if (!state.activeId || !list.some((p) => p.id === state.activeId)) {
     panel.hidden = true;
   }
+  if (scrollList) {
+    document.getElementById("listado")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+function resetPageAndRender() {
+  state.page = 1;
+  render();
+  fitMap(filtered());
 }
 
 function setCity(city) {
@@ -250,8 +332,7 @@ function setCity(city) {
   document.querySelectorAll(".nav-link[data-city]").forEach((btn) => {
     btn.classList.toggle("is-active", btn.dataset.city === city);
   });
-  render();
-  fitMap(filtered());
+  resetPageAndRender();
 }
 
 function openDetail(id) {
@@ -369,8 +450,7 @@ document.querySelectorAll(".city-card").forEach((btn) => {
 function bindSelect(id, key) {
   document.getElementById(id).addEventListener("change", (e) => {
     state[key] = e.target.value;
-    render();
-    fitMap(filtered());
+    resetPageAndRender();
   });
 }
 bindSelect("f-op", "op");
@@ -380,14 +460,17 @@ bindSelect("f-banos", "banos");
 
 document.getElementById("f-min").addEventListener("input", (e) => {
   state.min = e.target.value;
+  state.page = 1;
   render();
 });
 document.getElementById("f-max").addEventListener("input", (e) => {
   state.max = e.target.value;
+  state.page = 1;
   render();
 });
 document.getElementById("f-q").addEventListener("input", (e) => {
   state.q = e.target.value;
+  state.page = 1;
   render();
 });
 
@@ -401,8 +484,7 @@ document.querySelectorAll("#feature-filters .chip").forEach((chip) => {
       state.features.add(feat);
       chip.classList.add("is-on");
     }
-    render();
-    fitMap(filtered());
+    resetPageAndRender();
   });
 });
 
@@ -422,8 +504,7 @@ document.getElementById("btn-clear-filters").addEventListener("click", () => {
   document.getElementById("f-max").value = "";
   document.getElementById("f-q").value = "";
   document.querySelectorAll("#feature-filters .chip").forEach((c) => c.classList.remove("is-on"));
-  render();
-  fitMap(filtered());
+  resetPageAndRender();
 });
 
 document.getElementById("btn-fit").addEventListener("click", () => fitMap(filtered()));
