@@ -549,7 +549,7 @@ button, select, input { font: inherit; }
 .card-actions .btn { flex: 1; }
 
 .owners {
-  margin: 0 1.5rem 2.5rem;
+  margin: 0 1.5rem 1.25rem;
   padding: 2.5rem 1.5rem;
   border: 1px solid var(--line);
   background:
@@ -569,18 +569,152 @@ button, select, input { font: inherit; }
   margin: 0 0 1.25rem;
 }
 
-.foot {
+.social-row {
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
   flex-wrap: wrap;
-  padding: 1.5rem;
+  gap: 0.55rem;
+  align-items: center;
+}
+.hero-social { margin-top: 1.15rem; }
+.social-proof {
+  margin: 0.85rem 0 0;
+  color: #ffb4ae;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.82rem;
+  transition: transform 0.15s, border-color 0.15s, background 0.15s;
+}
+.social-btn svg { width: 16px; height: 16px; display: block; }
+.social-btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.4); }
+.social-btn.is-ig:hover { background: linear-gradient(135deg, #f58529, #dd2a7b 45%, #8134af); border-color: transparent; }
+.social-btn.is-tiktok:hover { background: #111; border-color: #25f4ee; box-shadow: 2px 0 #fe2c55; }
+.social-btn.is-fb:hover { background: #1877f2; border-color: transparent; }
+.social-btn.is-wa:hover { background: #19a841; border-color: transparent; }
+.foot-social .social-btn { padding: 0.65rem; }
+.foot-social .social-btn span { display: none; }
+
+.connect {
+  margin: 0 1.5rem 2.5rem;
+  padding: 2rem 1.25rem;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+}
+.connect-kicker {
+  margin: 0 0 0.4rem;
+  color: #ffb4ae;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+.connect-head h2 {
+  margin: 0 0 0.4rem;
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  line-height: 1;
+}
+.connect-head p {
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+}
+.connect-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+.connect-card {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.1rem 1rem;
+  border: 1px solid var(--line);
+  background: #0f0f11;
+  min-height: 132px;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.connect-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.28);
+}
+.connect-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  margin-bottom: 0.25rem;
+}
+.connect-icon svg { width: 18px; height: 18px; }
+.connect-card strong {
+  font-size: 1.05rem;
+}
+.connect-card span {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+.connect-card.is-wa .connect-icon { background: rgba(25,168,65,0.18); color: #35d466; }
+.connect-card.is-ig .connect-icon { background: rgba(221,42,123,0.16); color: #ff6bb5; }
+.connect-card.is-tiktok .connect-icon { background: rgba(37,244,238,0.12); color: #25f4ee; }
+.connect-card.is-fb .connect-icon { background: rgba(24,119,242,0.16); color: #4ea1ff; }
+
+.foot {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.75rem 1.5rem 2rem;
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.9rem;
 }
+.foot-brand {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+}
+.foot-logo {
+  height: 48px;
+  width: auto;
+  background: #fff;
+  padding: 0.35rem 0.55rem;
+  border-radius: 10px;
+  object-fit: contain;
+}
 .foot strong { color: #fff; display: block; margin-bottom: 0.2rem; }
-.foot a { color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.foot-brand p { margin: 0; max-width: 36rem; }
+.foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.1rem;
+}
+.foot-links a {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  padding-bottom: 1px;
+}
+.foot-links a:hover { border-bottom-color: var(--red); color: #fff; }
+
+@media (max-width: 900px) {
+  .connect-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .connect-grid { grid-template-columns: 1fr; }
+  .hero-social .social-btn span { display: none; }
+  .hero-social .social-btn { padding: 0.65rem; }
+}
 
 dialog {
   border: 1px solid var(--line);
