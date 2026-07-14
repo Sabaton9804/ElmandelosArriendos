@@ -933,7 +933,7 @@ dialog::backdrop { background: rgba(0,0,0,0.72); }
   margin: 0 0 1rem;
   color: #cfc9c0;
   font-size: 0.95rem;
-  max-width: 52ch;
+  max-width: 54ch;
 }
 .pitch-section-label {
   margin: 0 0 0.45rem;
@@ -942,6 +942,48 @@ dialog::backdrop { background: rgba(0,0,0,0.72); }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #ff8a80;
+}
+.pitch-vs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  margin-bottom: 1rem;
+}
+.pitch-vs > div {
+  padding: 0.75rem 0.8rem 0.85rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--line);
+}
+.pitch-vs > div.is-win {
+  border-color: rgba(225,6,0,0.4);
+  background: rgba(225,6,0,0.1);
+}
+.pitch-vs ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+.pitch-vs li {
+  position: relative;
+  padding-left: 0.85rem;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: #cfc9c0;
+}
+.pitch-vs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: var(--muted);
+}
+.pitch-vs .is-win li::before {
+  background: var(--red);
 }
 .pitch-money {
   list-style: none;
@@ -1092,6 +1134,7 @@ dialog::backdrop { background: rgba(0,0,0,0.72); }
   letter-spacing: 0.06em;
 }
 @media (max-width: 560px) {
+  .pitch-vs,
   .pitch-split { grid-template-columns: 1fr; }
   .pitch-actions { flex-direction: column; }
 }
